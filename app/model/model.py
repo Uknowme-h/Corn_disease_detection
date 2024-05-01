@@ -1,23 +1,17 @@
 from fastai import *
-from fastai.vision import *
-from PIL import Image
+from fastai.vision.all import *
+
 
 def predict_image(image_path):
     # Load the Fastai model
-    learn = load_learner('/path/to/model.pkl')
+    learn = load_learner('./model/corn_model.pkl')
 
-    # Open the image using PIL
-    image = Image.open(image_path)
-
-    # Preprocess the image
-    img_tensor = pil2tensor(image, dtype=np.float32)
-    img_tensor.div_(255)
+    img = PILImage.create(image_path)
 
     # Make the prediction
-    pred_class, pred_idx, outputs = learn.predict(Image(img_tensor))
+    pred_class, pred_idx, outputs = learn.predict(img)
 
     # Return the prediction
-    if pred_class == 'healthy':
-        return 'healthy'
-    else:
-        return 'infected'
+    return pred_class
+
+#  Set-ExecutionPolicy Unrestricted -Scope Process
