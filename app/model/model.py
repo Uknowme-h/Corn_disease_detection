@@ -2,16 +2,16 @@
 from fastai.vision.all import *
 # import requests
 # from PIL import Image
-import pathlib
-temp = pathlib.PosixPath
-pathlib.PosixPath = pathlib.WindowsPath
+# import pathlib
+# temp = pathlib.PosixPath
+# pathlib.PosixPath = pathlib.WindowsPath
 
 def predict_image(image_url):
     # Download the image
     # response = requests.get(image_url)
     # with Image.open(BytesIO(response.content)) as img:
         
-    img = PILImage.create(image_url)
+    img = image_url
     
     # Load the Fastai model
     learn = load_learner('./app/model/corn_model.pkl')

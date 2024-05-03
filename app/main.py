@@ -1,5 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile
 from app.model.model import predict_image
+from fastapi import FastAPI, UploadFile, File
+from fastai.vision.all import *
+import shutil
 
 app = FastAPI()
 
@@ -7,13 +10,15 @@ app = FastAPI()
 def home():
     return {"message": "Hello, World"}
 
-@app.get("/predict/")
-def predict():
-    # if not image_url:
-    #     return {"error": "image_url is required"}
-    
+@app.post("/predict/")
+async def predict(file: UploadFile = File(...)):
     try:
-        prediction = predict_image('./app/model/example2.jpg')
+        # Convert the uploaded file to PILImage
+        img = PILImage.create(file.file)
+
+        # Get predictions using the converted image
+        prediction = predict_image(img)
+
         return {"prediction": prediction}
     except Exception as e:
         return {"error": str(e)}
