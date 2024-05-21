@@ -22,3 +22,10 @@ async def predict(file: UploadFile = File(...)):
         return {"prediction": prediction}
     except Exception as e:
         return {"error": str(e)}
+    
+@app.post("/uploadfile/")
+async def create_upload_file(file: UploadFile = File(...)):
+    with open(file.filename, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+    return {"filename": file.filename}
+
