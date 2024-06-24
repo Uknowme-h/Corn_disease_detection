@@ -21,3 +21,6 @@ def predict_image(image_url):
 
     # Return the prediction
     return pred_class
+
+pred = predict_image('./app/model/example2.jpg')
+print(pred)
